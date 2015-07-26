@@ -18,7 +18,7 @@ $.fn.serializeObject = function()
 function onread(evt){
     var attr = evt.getAttribute('data-moto');
     $('#EditModal').modal('toggle');
-    $.get('get.php?id='+attr,function(e){
+    $.get('php/get.php?id='+attr,function(e){
         var data = JSON.parse(e);
         $('#EditName').val(data.name);
         $('#EditaddRess').val(data.add);
@@ -30,13 +30,13 @@ function onread(evt){
 $('#EditRegistration').click(function(){
     var data = $('#EditForm').serializeObject();
 
-    $.post('update.php',data,function(e){
+    $.post('php/update.php',data,function(e){
         //console.log(e);
         if(e == 'success'){
             $('#EditSuccess').html(
                 "<div class='alert alert-info fade in'>"+
                 "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-                "<strong>Success!</strong> Indicates a successful or positive action. </div>"
+                "<strong>Updated!</strong> Update a successful You can Update another data. </div>"
             );
 
             window.setTimeout(function(){
@@ -44,7 +44,7 @@ $('#EditRegistration').click(function(){
             },3000);
 
             $('#AjaxTable').dataTable({
-                "ajax": 'all.php',
+                "ajax": 'php/all.php',
                 "bDestroy": true,
                 "fnRowCallback" : function(e,m,j){
                     $('td:eq(3)',e).html("<a href='javascript:void(0)' data-moto='"+m[0]+"' onclick=\"onread(this)\">"+m[3]+"</a>");
@@ -56,7 +56,7 @@ $('#EditRegistration').click(function(){
 
 $(function(){
     $('#AjaxTable').dataTable({
-        "ajax": 'all.php',
+        "ajax": 'php/all.php',
         "bDestroy": true,
         "fnRowCallback" : function(e,m,j){
             $('td:eq(3)',e).html("<a href='javascript:void(0)' data-moto='"+m[0]+"' onclick=\"onread(this)\">"+m[3]+"</a>");
@@ -73,12 +73,12 @@ $(function(){
     $('#registrationForm').submit(function(){
         var data = $(this).serializeObject();
 
-        $.post('insert.php',data,function(e){
+        $.post('php/insert.php',data,function(e){
             if(e == 'success'){
                 $('#registrationSuccess').html(
                     "<div class='alert alert-success fade in'>"+
                     "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-                    "<strong>Success!</strong> Indicates a successful or positive action. </div>"
+                    "<strong>Success!</strong> Registration successful Ye </div>"
                 );
                 $("#registrationForm input").val('');
 
